@@ -17,8 +17,8 @@ cargo build
 ```
 
 ## Features
-* SIMD optimization .
-* Personal and Salt support.
+* SIMD optimization.
+* Support for Personalization and Salt.
 
 ## License
 
