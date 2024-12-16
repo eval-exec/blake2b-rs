@@ -103,6 +103,23 @@ int blake2b_init( blake2b_state *S, size_t outlen )
 }
 
 
+int blake2b_init_key_with_param( blake2b_state *S, const blake2b_param *P, const void *key, size_t keylen )
+{
+  if( blake2b_init_param( S, P ) < 0 )
+    return 0;
+
+  {
+    uint8_t block[BLAKE2B_BLOCKBYTES];
+    memset( block, 0, BLAKE2B_BLOCKBYTES );
+    memcpy( block, key, keylen );
+    blake2b_update( S, block, BLAKE2B_BLOCKBYTES );
+    secure_zero_memory( block, BLAKE2B_BLOCKBYTES ); /* Burn the key from stack */
+  }
+  return 0;
+}
+
+
+
 int blake2b_init_key( blake2b_state *S, size_t outlen, const void *key, size_t keylen )
 {
   blake2b_param P[1];
